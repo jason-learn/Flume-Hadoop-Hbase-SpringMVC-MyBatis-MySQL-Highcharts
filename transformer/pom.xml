@@ -1,0 +1,107 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.jason</groupId>
+  <artifactId>transformer</artifactId>
+  <version>0.0.1</version>
+
+  <dependencies>
+  <!-- hadoop start -->
+  <dependency>
+  	<groupId>org.apache.hadoop</groupId>
+  	<artifactId>hadoop-client</artifactId>
+  	<version>2.5.0</version>
+  </dependency>
+  <!-- hadoop end -->
+  
+  <!-- hbase start -->
+  <dependency>
+  	<groupId>org.apache.hbase</groupId>
+  	<artifactId>hbase-server</artifactId>
+  	<version>0.98.6-hadoop2</version>
+  </dependency>
+  
+  <dependency>
+  	<groupId>org.apache.hbase</groupId>
+  	<artifactId>hbase-client</artifactId>
+  	<version>0.98.6-hadoop2</version>
+  </dependency>
+  <!-- hbase end --> 
+  
+  <!-- hive start -->
+  <!-- https://mvnrepository.com/artifact/org.apache.hadoop.hive/hive-exec -->
+  <dependency>
+	  <groupId>org.apache.hive</groupId>
+	  <artifactId>hive-exec</artifactId>
+	  <version>1.2.2</version>
+  </dependency>	
+	<!-- hive end -->
+  
+   
+	
+  <!-- mysql start -->
+  <dependency>
+	  <groupId>mysql</groupId>
+	  <artifactId>mysql-connector-java</artifactId>
+	  <version>5.1.18</version>
+  </dependency>
+  <!-- mysql end -->
+    <dependency>
+      <groupId>cz.mallat.uasparser</groupId>
+      <artifactId>uasparser</artifactId>
+      <version>0.6.1</version>
+    </dependency>
+  </dependencies>
+
+   <profiles>
+    <profile>
+      <id>dev</id>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
+      <build>
+        <resources>
+          <resource>
+            <directory>src/main/config</directory>
+          </resource>
+        </resources>
+      </build>
+    </profile>
+  </profiles>
+  
+  
+  <build>
+    <sourceDirectory>src</sourceDirectory>
+    <plugins>
+      <plugin>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.3</version>
+        <configuration>
+          <source>1.7</source>
+          <target>1.7</target>
+        </configuration>
+      </plugin>
+      
+       <plugin>
+	    <groupId>org.apache.maven.plugins</groupId>
+	    <artifactId>maven-shade-plugin</artifactId>
+	    <version>2.1</version>
+	    <executions>
+	      <execution>
+	        <phase>package</phase>
+	        <goals>
+	          <goal>shade</goal>
+	        </goals>
+	        <configuration>
+	          <artifactSet>
+	            <includes>
+	              <include>cz.mallat.uasparser:uasparser</include>
+	              <include>net.sourceforge.jregex:jregex</include>
+	            </includes>
+	          </artifactSet>
+	        </configuration>
+	      </execution>
+	    </executions>
+	  </plugin>     
+    </plugins>
+  </build>
+</project>
